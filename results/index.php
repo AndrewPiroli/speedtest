@@ -87,9 +87,9 @@ if($db_type=="mysql"){
 	$q->bind_result($ispinfo,$dl,$ul,$ping,$jit);
 	$q->fetch();
 }else if($db_type=="sqlite"){
-	$conn = new PDO("sqlite:$Sqlite_db_file") or die();
-	$q=$conn->prepare("select ispinfo,dl,ul,ping,jitter from speedtest_users where id=?") or die();
-	$q->execute(array($id)) or die();
+	$conn = new PDO("sqlite:$Sqlite_db_file") or die("Failed to connect to DB.  [SQLite]");
+	$q=$conn->prepare("select ispinfo,dl,ul,ping,jitter from speedtest_users where id=?") or die("Failed to prepare SQ statement [SQLite]");
+	$q->execute(array($id)) or die("Failed to execute SQL statement. [SQLite]");
 	$row=$q->fetch() or die();
 	$ispinfo=$row["ispinfo"];
 	$dl=$row["dl"];
@@ -102,17 +102,17 @@ if($db_type=="mysql"){
     $conn_db = "dbname=$PostgreSql_databasename";
     $conn_user = "user=$PostgreSql_username";
     $conn_password = "password=$PostgreSql_password";
-    $conn = new PDO("pgsql:$conn_host;$conn_db;$conn_user;$conn_password") or die();
-	$q=$conn->prepare("select ispinfo,dl,ul,ping,jitter from speedtest_users where id=?") or die();
-	$q->execute(array($id)) or die();
-	$row=$q->fetch() or die();
+    $conn = new PDO("pgsql:$conn_host;$conn_db;$conn_user;$conn_password") or die("Failed to connect to postgres database. [PostgreSQL]");
+	$q=$conn->prepare("select ispinfo,dl,ul,ping,jitter from speedtest_users where id=?") or die("Failed to prepare SQ statement. [PostgreSQL]");
+	$q->execute(array($id)) or die("Failed to execute SQL statement. [PostgreSQL]");
+	$row=$q->fetch() or die("Failed to fetch SQL results. [PostgreSQL]");
 	$ispinfo=$row["ispinfo"];
 	$dl=$row["dl"];
 	$ul=$row["ul"];
 	$ping=$row["ping"];
 	$jit=$row["jitter"];
 	$conn=null;
-}else die();
+}else die("Unrecognized DB type!");
 
 $dl=format($dl);
 $ul=format($ul);
