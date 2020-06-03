@@ -1,7 +1,6 @@
 <?php
 $WATERMARK_TEXT="LibreSpeed";
 
-error_reporting(0);
 putenv('GDFONTPATH=' . realpath('.'));
 function tryFont($name){
 	$rp=realpath('.');
