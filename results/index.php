@@ -76,7 +76,7 @@ $MS_TEXT="ms";
 $id=$_GET["id"];
 include_once('telemetry_settings.php');
 require 'idObfuscation.php';
-if($enable_id_obfuscation) $id=deobfuscateId($id);
+$id=deobfuscateId($id);
 $conn=null; $q=null;
 $ispinfo=null; $dl=null; $ul=null; $ping=null; $jit=null;
 if($db_type=="mysql"){

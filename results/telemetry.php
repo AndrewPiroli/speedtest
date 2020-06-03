@@ -37,7 +37,7 @@ if($db_type=="mysql"){
 	$stmt->execute() or die("4");
     $stmt->close() or die("5");
 	$id=$conn->insert_id;
-	echo "id ".($enable_id_obfuscation?obfuscateId($id):$id);
+	echo "id ".obfuscateId($id);
     $conn->close() or die("6");
 
 }elseif($db_type=="sqlite"){
@@ -61,7 +61,7 @@ if($db_type=="mysql"){
     $stmt = $conn->prepare("INSERT INTO speedtest_users (ip,ispinfo,extra,ua,lang,dl,ul,ping,jitter,log) VALUES (?,?,?,?,?,?,?,?,?,?)") or die("2");
     $stmt->execute(array($ip,$ispinfo,$extra,$ua,$lang,$dl,$ul,$ping,$jitter,$log)) or die("3");
 	$id=$conn->lastInsertId();
-	echo "id ".($enable_id_obfuscation?obfuscateId($id):$id);
+	echo "id ".obfuscateId($id);
     $conn = null;
 }elseif($db_type=="postgresql"){
     // Prepare connection parameters for db connection
@@ -74,7 +74,7 @@ if($db_type=="mysql"){
     $stmt = $conn->prepare("INSERT INTO speedtest_users (ip,ispinfo,extra,ua,lang,dl,ul,ping,jitter,log) VALUES (?,?,?,?,?,?,?,?,?,?)") or die("2");
     $stmt->execute(array($ip,$ispinfo,$extra,$ua,$lang,$dl,$ul,$ping,$jitter,$log)) or die("3");
 	$id=$conn->lastInsertId();
-	echo "id ".($enable_id_obfuscation?obfuscateId($id):$id);
+	echo "id ".obfuscateId($id);
     $conn = null;
 }
 else die("-1");
